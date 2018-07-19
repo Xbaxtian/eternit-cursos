@@ -1,0 +1,16 @@
+
+
+/*HEADER*/
+
+#main-header{
+	background-color: black;
+}
+
+.home-link{
+	font-size: 80px !important;
+	font-weight: normal !important;
+	color: white !important;
+}
+.home-link:hover{
+	text-decoration: none;
+}

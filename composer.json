@@ -1,0 +1,10 @@
+{
+    "name": "xbaxt/codeigniter-config",
+    "description": "Eternit-cursos PICNIC",
+    "type": "project",
+    "license": "MIT",
+    "minimum-stability": "alpha",
+    "require": {
+        "php": "^5.6.0"
+    }
+}
