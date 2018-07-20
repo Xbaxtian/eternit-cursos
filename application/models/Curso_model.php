@@ -16,7 +16,7 @@ class Curso_model extends CI_Model{
         $curso = array("detalle"=>'',"clases"=>'');
 
         $curso['detalle'] = $this->getDetalle($crs_id);
-        $curso['clases'] = $this->getClases($crs_id);
+        $curso['clases'] = $this->getClases($crs_id,$orden,$lugar);
 
         return $curso;
     }
@@ -26,14 +26,29 @@ class Curso_model extends CI_Model{
         return $query->result_array();
     }
 
-    private function getClases($crs_id,$orden='nivel'){
+    private function getClases($crs_id,$orden,$lugar=''){
         $this->load->model("Clase_model","clase");
+        $clases = $this->clase->clasesPorCurso($crs_id,$lugar);
+        /*switch ($orden) {
+            case 'nivel':
+                $clases = $this->ordenarPorNivel($clases);
+                break;
+
+            case 'calendario':
+                $clases = $this->ordenarPorCalendario($clases);
+                break;
+
+            default:
+                $clases = $this->ordenarPorNivel($clases);
+                break;
+        }*/
+        return $clases;
     }
 
-    private function ordenarPorNivel(){
+    private function ordenarPorNivel($clases){
 
     }
-    private function ordenarPorCalendario(){
+    private function ordenarPorCalendario($clases){
 
     }
 

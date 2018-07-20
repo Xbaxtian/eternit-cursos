@@ -18,8 +18,10 @@ class Curso extends CI_Controller{
 
     public function detallecurso(){
         $crs_id = $this->input->get('id');
+        $orden = $this->input->get('orden');
+        $lugar = $this->input->get('lugar');
 
-        $lista = $this->curso->getCurso($crs_id);
+        $lista = $this->curso->getCurso($crs_id,$orden,$lugar);
         $lista = json_encode($lista);
         $lista = $this->quitarPrefijos($lista);
         echo $lista;
@@ -30,7 +32,7 @@ class Curso extends CI_Controller{
     }
 
     private function quitarPrefijos($json){
-        $prefijos = array("crs_","cls_");
+        $prefijos = array("crs_","cls_","hrr_");
         return str_replace($prefijos,"",$json);
     }
 
