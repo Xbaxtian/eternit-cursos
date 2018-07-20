@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 if($_SERVER == 'localhost')
-	$config['base_url'] = 'http://localhost/codeigniter-config/';
+	$config['base_url'] = 'http://localhost/eternit-cursos/';
 else
 	$config['base_url'] = '';
 /*
