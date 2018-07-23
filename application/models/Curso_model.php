@@ -5,20 +5,34 @@ class Curso_model extends CI_Model{
 
     function __construct(){
         parent::__construct();
+        $this->load->model("Clase_model","clase");
     }
 
-    public function listarCursos(){
+    public function listarTodos($usr_id=''){
         $query = $this->db->get('curso');
-        return $query->result_array();
+        $dataCursos = $query->result_array();
+        if(isset($usr_id)){
+            foreach ($dataCursos as $key => $curso) {
+                $dataCursos[$key]['clases'] = $this->clase->clasesPorCurso($usr_id,$curso['crs_id']);
+            }
+        }
+        return $dataCursos;
     }
 
-    public function getCurso($crs_id,$orden='',$lugar=''){
+    public function getCurso($usr_id,$crs_id,$orden='',$lugar=''){
         $curso = array("detalle"=>'',"clases"=>'');
 
         $curso['detalle'] = $this->getDetalle($crs_id);
-        $curso['clases'] = $this->getClases($crs_id,$orden,$lugar);
+        $curso['clases'] = $this->getClases($usr_id,$crs_id,$orden,$lugar);
 
         return $curso;
+    }
+
+    public function matricular($usr_id,$cls_id,$hrr_id){
+        $clase = $this->clase->getClasePorId($cls_id,$usr_id);
+        $this->load->model("Matricula_model","matricula");
+        $response = $this->matricula->agregarMatricula($usr_id,$clase,$hrr_id);
+        //return $response;
     }
 
     private function getDetalle($crs_id){
@@ -26,9 +40,8 @@ class Curso_model extends CI_Model{
         return $query->result_array();
     }
 
-    private function getClases($crs_id,$orden,$lugar=''){
-        $this->load->model("Clase_model","clase");
-        $clases = $this->clase->clasesPorCurso($crs_id,$lugar);
+    private function getClases($usr_id,$crs_id,$orden,$lugar=''){
+        $clases = $this->clase->clasesPorCurso($crs_id,$lugar,$usr_id);
         /*switch ($orden) {
             case 'nivel':
                 $clases = $this->ordenarPorNivel($clases);
